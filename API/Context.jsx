@@ -15,4 +15,10 @@ export default class ContextAPI {
             ${this._context}.fillRect(${x}, ${y}, ${w}, ${h});
         `);
     };
+
+    set globalAlpha(value) {
+        this._canvas._webView.injectJavaScript(`
+            ${this._context}.globalAlpha = ${value};
+        `);
+    };
 };
