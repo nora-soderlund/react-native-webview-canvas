@@ -1,36 +1,14 @@
-import { TouchableHighlightBase } from "react-native";
+import BundleAPI from "./BundleAPI";
 
-export default class ContextAPI {
+export default class ContextAPI extends BundleAPI {
     constructor(canvas, context) {
+        super();
+
         this._canvas = canvas;
         this._context = context;
-    };
 
-    _bundle = null;
-
-    startBundle() {
-        this._bundle = [];
-    };
-
-    async executeBundle() {
-        await this._canvas._webView.current.injectJavaScript(`
-            {
-                ${this._bundle.join("")}
-            }
-        `);
-
-        this.stopBundle();
-    };
-
-    async stopBundle() {
-        this._bundle = null;
-    };
-
-    async _addToBundleOrInject(message) {
-        if(this._bundle)
-            this._bundle.push(message);
-        else
-            await this._canvas._webView.current.injectJavaScript(message);
+        // for the bundle api
+        this._webView = this._canvas._webView;
     };
 
     async clearRect(x, y, w, h) {
