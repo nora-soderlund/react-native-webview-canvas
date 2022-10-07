@@ -3,42 +3,7 @@ React Native WebView Canvas is a component and function mapper between your Reac
 
 ## Usage
 ```jsx
-import React, { Component } from "react";
-import CanvasWebView from "react-native-webview-canvas";
-
-class MyCanvasComponent extends Component {
-  async onLoad(canvasWebView) {
-    const canvas = await canvasWebView.createCanvas();
-    
-    canvas.width = 300;
-    canvas.height = 300;
-
-    const context = await canvas.getContext("2d");
-
-    context.fillStyle = "green";
-    context.fillRect(0, 0, 300, 300);
-
-    context.font = "14px sans-serif";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    
-    context.fillStyle = "red";
-    context.fillText("Hello World", 150, 150);
-  };
-  
-  render() {
-    return (
-      <CanvasWebView
-        width={300}
-        height={300}
-        onLoad={this.onLoad}
-        />
-    );
-  };
-}
-```
-With the Bundle API:
-```jsx
+With the Bundle API (prefered):
 import React, { Component } from "react";
 import CanvasWebView from "react-native-webview-canvas";
 
@@ -64,6 +29,43 @@ class MyCanvasComponent extends Component {
     context.fillText("Hello World", 150, 150);
 
     await context.executeBundle();
+  };
+  
+  render() {
+    return (
+      <CanvasWebView
+        width={300}
+        height={300}
+        onLoad={this.onLoad}
+        />
+    );
+  };
+}
+```
+
+Without the Bundle API:
+```jsx
+import React, { Component } from "react";
+import CanvasWebView from "react-native-webview-canvas";
+
+class MyCanvasComponent extends Component {
+  async onLoad(canvasWebView) {
+    const canvas = await canvasWebView.createCanvas();
+    
+    canvas.width = 300;
+    canvas.height = 300;
+
+    const context = await canvas.getContext("2d");
+
+    context.fillStyle = "green";
+    await context.fillRect(0, 0, 300, 300);
+
+    context.font = "14px sans-serif";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    
+    context.fillStyle = "red";
+    await context.fillText("Hello World", 150, 150);
   };
   
   render() {
