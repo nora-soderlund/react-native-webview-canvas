@@ -3,6 +3,7 @@ import { View } from "react-native";
 import WebView from "react-native-webview";
 
 import CanvasAPI from "./../API/Canvas";
+import ImageData from "../API/ImageData";
 
 export default class CanvasWebView extends Component {
     _listeners = {};
@@ -20,24 +21,20 @@ export default class CanvasWebView extends Component {
         const data = JSON.parse(event.nativeEvent.data);
 
         if(data.message) {
-            try {
-                data.message = JSON.parse(data.message);
+            switch(data.type) {
+                case "ImageData":
+                    data.message = new ImageData(data.message);
 
-                if(typeof data.message == "object") {
-                    for(let key in data.message) {
-                        try {
-                            data.message[key] = JSON.parse(data.message[key]);
-                        }
-                        catch {
-                            console.error(`Failed to parse ${key} in ${data.listener}, passing as a ${typeof data.message[key]}`);
-                        }
-                    }
-                }
-            }
-            catch {
-                console.error(`Failed to parse message in ${data.listener}, passing as a ${typeof data.message}`);
+                    break;
+                
+                default: 
+                    data.message = JSON.parse(data.message);
+                    
+                    break;
             }
         }
+
+        console.log(data.type);
 
         this._callListeners(data.listener, data.message);
         this._removeListeners(data.listener);
@@ -129,26 +126,39 @@ export default class CanvasWebView extends Component {
                                     </style>
 
                                     <script type="text/javascript">
-                                        function postMessage(listener, message) {
-                                            let result = message;
+                                        function serializeObject(message) {
+                                            if(typeof message == "object" && message?.constructor?.name) {
+                                                let result = {};
 
-                                            if(typeof message == "object") {
-                                                result = {};
+                                                switch(message.constructor.name) {
+                                                    case "Object":
+                                                        result = JSON.stringify(message);
 
-                                                for(let key in message) {
-                                                    if(typeof message[key] == "object" && message[key].constructor.name == "Uint8ClampedArray") {
-                                                        result[key] = "[" + message[key].toString() + "]";
+                                                        break;
 
-                                                        continue;
-                                                    }
+                                                    case "Uint8ClampedArray":
+                                                        result = '[' + message.toString() + ']';
+                                                        break;
 
-                                                    result[key] = JSON.stringify(message[key]);
+                                                    default:
+                                                        for(let key in message)
+                                                            result[key] = serializeObject(message[key]);
+
+                                                        result = JSON.stringify(result);
+
+                                                        break;
                                                 }
 
-                                                result = JSON.stringify(result);
+                                                return result;
                                             }
 
-                                            window.ReactNativeWebView.postMessage(JSON.stringify({ listener, message: result }));
+                                            return JSON.stringify(message);
+                                        };
+
+                                        function postMessage(listener, message) {
+                                            let result = serializeObject(message);
+
+                                            window.ReactNativeWebView.postMessage(JSON.stringify({ listener, type: message?.constructor?.name, message: result }));
                                         };
                                     </script>
                                 </head>
