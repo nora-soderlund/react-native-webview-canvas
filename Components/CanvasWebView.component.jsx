@@ -23,7 +23,7 @@ export default class CanvasWebView extends Component {
         if(data.message) {
             switch(data.type) {
                 case "ImageData":
-                    data.message = new ImageData(data.message);
+                    data.message = ImageData.fromMessage(data.message);
 
                     break;
                 

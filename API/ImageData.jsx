@@ -1,13 +1,26 @@
 export default class ImageData {
-    constructor(message) {
+    static fromMessage(message) {
         const data = JSON.parse(message);
+
+        return new ImageData(new Uint8ClampedArray(JSON.parse(data.data)), parseInt(data.width), parseInt(data.height), { colorSpace: data.colorSpace });
+    };
+
+    constructor(dataArray, width, height, settings) {
+        if(typeof dataArray == "number") {
+            settings = height;
+            
+            height = width;
+            width = dataArray;
+
+            dataArray = undefined;
+        }
         
-        this.width = parseInt(data.width);
-        this.height = parseInt(data.height);
+        this.width = width;
+        this.height = height;
 
-        this.data = new Uint8ClampedArray(JSON.parse(data.data));
+        this.data = dataArray;
 
-        this.colorSpace = data.colorSpace;
+        this.colorSpace = settings?.colorSpace;
     };
 
     toObject() {
