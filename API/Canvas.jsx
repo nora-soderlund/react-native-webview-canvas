@@ -1,5 +1,3 @@
-import { Component } from "react";
-
 import ContextAPI from "./Context";
 
 export default class CanvasAPI {

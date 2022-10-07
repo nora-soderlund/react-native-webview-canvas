@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { PixelRatio, View } from "react-native";
+import { View } from "react-native";
 import WebView from "react-native-webview";
 
-import Document from "../API/Document";
-import CanvasAPI from "../API/Canvas";
-
+import CanvasAPI from "./../API/Canvas";
 
 export default class CanvasWebView extends Component {
     _listeners = {};
