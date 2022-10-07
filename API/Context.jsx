@@ -1,4 +1,4 @@
-import BundleAPI from "./BundleAPI";
+import BundleAPI from "./Bundle";
 
 export default class ContextAPI extends BundleAPI {
     constructor(canvasWebView, context) {
