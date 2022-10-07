@@ -10,7 +10,7 @@ export default class ContextAPI extends BundleAPI {
 
     putImageData(imageData, ...args) {
         let json = JSON.stringify([...args]);
-        let jsonImageData = JSON.stringify([imageData]);
+        let jsonImageData = JSON.stringify([imageData.toObject()]);
 
         return new Promise((resolve) => {
             const key = `${this._context}.putImageData`;

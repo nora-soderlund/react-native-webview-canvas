@@ -34,8 +34,6 @@ export default class CanvasWebView extends Component {
             }
         }
 
-        console.log(data.type);
-
         this._callListeners(data.listener, data.message);
         this._removeListeners(data.listener);
     };
