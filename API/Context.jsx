@@ -7,6 +7,30 @@ export default class ContextAPI extends BundleAPI {
         this._canvasWebView = canvasWebView;
         this._context = context;
     };
+
+    putImageData(imageData, ...args) {
+        let json = JSON.stringify([...args]);
+        let jsonImageData = JSON.stringify([imageData]);
+
+        return new Promise((resolve) => {
+            const key = `${this._context}.putImageData`;
+            
+            if(this._canvasWebView._addListener(key, resolve)) {
+                this._canvasWebView._webView.current.injectJavaScript(`
+                    {
+                        const imageData = ${jsonImageData.substring(1, jsonImageData.length - 1)};
+
+                        const newImageData = ${this._context}.createImageData(imageData.width, imageData.height);
+                        newImageData.data.set(imageData.data);
+
+                        const result = ${this._context}.putImageData(newImageData, ${json.substring(1, json.length - 1)});
+
+                        postMessage("${key}", result);
+                    }
+                `);
+            }
+        });
+    };
 };
 
 const properties = [
@@ -56,7 +80,7 @@ for(let index = 0; index < properties.length; index++) {
                 
                 if(this._canvasWebView._addListener(key, resolve)) {
                     this._canvasWebView._webView.current.injectJavaScript(`
-                        window.ReactNativeWebView.postMessage([ "${key}", ${key} ]);
+                        postMessage("${key}", ${key});
                     `);
                 }
             });
@@ -116,11 +140,20 @@ const methods = [
 for(let index = 0; index < methods.length; index++) {
     const method = methods[index];
 
+    if(ContextAPI.prototype[method] != undefined)
+        continue;
+
     ContextAPI.prototype[method] = function(...args) {
         let json = JSON.stringify([...args]);
 
-        this._addToBundleOrInject(`
-            ${this._context}.${method}(${json.substring(1, json.length - 1)});
-        `);
+        return new Promise((resolve) => {
+            const key = `${this._context}.${method}`;
+            
+            if(this._canvasWebView._addListener(key, resolve)) {
+                this._canvasWebView._webView.current.injectJavaScript(`
+                    postMessage("${key}", ${this._context}.${method}(${json.substring(1, json.length - 1)}));
+                `);
+            }
+        });
     };
 }

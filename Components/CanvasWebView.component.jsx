@@ -7,11 +7,40 @@ import CanvasAPI from "./../API/Canvas";
 export default class CanvasWebView extends Component {
     _listeners = {};
 
-    _onMessage(event) {
-        const sections = event.nativeEvent.data.split(',');
+    _serializeMessage(message) {
+        const result = {};
 
-        this._callListeners(...sections);
-        this._removeListeners(...sections);
+        for(let key in message)
+            result[key] = JSON.stringify(message[key]);
+
+        return JSON.stringify(result);
+    }
+
+    _onMessage(event) {
+        const data = JSON.parse(event.nativeEvent.data);
+
+        if(data.message) {
+            try {
+                data.message = JSON.parse(data.message);
+
+                if(typeof data.message == "object") {
+                    for(let key in data.message) {
+                        try {
+                            data.message[key] = JSON.parse(data.message[key]);
+                        }
+                        catch {
+                            console.error(`Failed to parse ${key} in ${data.listener}, passing as a ${typeof data.message[key]}`);
+                        }
+                    }
+                }
+            }
+            catch {
+                console.error(`Failed to parse message in ${data.listener}, passing as a ${typeof data.message}`);
+            }
+        }
+
+        this._callListeners(data.listener, data.message);
+        this._removeListeners(data.listener);
     };
 
     _addListener(event, callback) {
@@ -47,7 +76,7 @@ export default class CanvasWebView extends Component {
         if(this._addListener("requestAnimationFrame", callback)) {
             await this._webView.current.injectJavaScript(`
                 window.requestAnimationFrame(() => {
-                    window.ReactNativeWebView.postMessage([ "requestAnimationFrame" ]);
+                    postMessage("requestAnimationFrame");
                 });
             `);
         }
@@ -98,6 +127,30 @@ export default class CanvasWebView extends Component {
                                             padding: 0;
                                         }
                                     </style>
+
+                                    <script type="text/javascript">
+                                        function postMessage(listener, message) {
+                                            let result = message;
+
+                                            if(typeof message == "object") {
+                                                result = {};
+
+                                                for(let key in message) {
+                                                    if(typeof message[key] == "object" && message[key].constructor.name == "Uint8ClampedArray") {
+                                                        result[key] = "[" + message[key].toString() + "]";
+
+                                                        continue;
+                                                    }
+
+                                                    result[key] = JSON.stringify(message[key]);
+                                                }
+
+                                                result = JSON.stringify(result);
+                                            }
+
+                                            window.ReactNativeWebView.postMessage(JSON.stringify({ listener, message: result }));
+                                        };
+                                    </script>
                                 </head>
                             </html>
                         `
