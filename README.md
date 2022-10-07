@@ -79,7 +79,7 @@ class MyCanvasComponent extends Component {
 ```
 
 # References
-## Canvas Component
+## CanvasWebView
 ### Props
 - width
 
@@ -91,6 +91,12 @@ Sets the height of the WebView (workspace) instance and NOT the Canvas API eleme
 
 Dispatches when the workspace is ready to be used. This is where you should initialize your render functions.
 
+### Methods
+- [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
+- `async createCanvas(background = false)`
+
+Creates an instance of a Canvas within this CanvasAPI WebView instance. If background is set to true, it will not be rendered in the WebView.
+
 ## Canvas API
 ### Properties
 - [width](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/width)
@@ -98,10 +104,6 @@ Dispatches when the workspace is ready to be used. This is where you should init
 
 ### Methods
 - [getContext](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext)
-- [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
-- `async createElement()`
-
-Creates an instance of a Canvas within this CanvasAPI WebView instance.
 
 ## Context API (extends Bundle API)
 This has no methods or properties.
