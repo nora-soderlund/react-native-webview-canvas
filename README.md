@@ -65,7 +65,7 @@ Sets the width of the WebView (workspace) instance and NOT the Canvas API elemen
 Sets the height of the WebView (workspace) instance and NOT the Canvas API element.
 - onLoad
 
-Dispatches when the workspace is ready to be used. This is where you should initialize your render functions).
+Dispatches when the workspace is ready to be used. This is where you should initialize your render functions.
 
 ## Canvas API
 ### Properties
@@ -101,9 +101,8 @@ Empties the current bundle list but DOES NOT execute it. This does NOT stop reco
 Stops recording the bundle but DOES NOT empty it.
 
 ## Extended ContextAPI
-All methods in here accepts `await` but may not require it. To return a value, you must use `await`. And when not using the Bundle API, you may want to await for the method to complete before performing another operation to avoid issues. In these cases, you should instead use the Bundle API.
-
 ### Properties
+Each and every property here returns a Promise in the getter, this means you must await it or catch it in a callback. Keep in mind if you're using the Bundle API, anything that's not been executed will not show up.
 - [fillStyle](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle)
 - [filter](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter)
 - [font](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/font)
@@ -131,6 +130,8 @@ All methods in here accepts `await` but may not require it. To return a value, y
 - [wordSpacing](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/wordSpacing)
 
 ### Methods
+All methods in here accepts `await` but may not require it. To return a value, you must use `await`. And when not using the Bundle API, you may want to await for the method to complete before performing another operation to avoid issues. In these cases, you should instead use the Bundle API.
+
 - [arc](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc)
 - [arcTo](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arcTo)
 - [beginPath](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/beginPath)
