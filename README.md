@@ -114,7 +114,10 @@ This has no methods or properties.
 ## ImageData API
 This package implements a clone of the ImageData API that is both constructed automatically by getImageData, but can also be constructed manually and be used together with Uint8ClampedArray like so:
 ```jsx
-// Example to fill a 50x50 square with solid red.
+import { ImageData } from "react-native-webview-canvas";
+
+// ...
+
 const dataArray = new Uint8ClampedArray(4 * 50 * 50);
 
 for(let pixel = 0; pixel < dataArray.length; pixel += 4) {
