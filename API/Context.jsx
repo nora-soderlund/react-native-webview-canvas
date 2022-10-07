@@ -1,14 +1,11 @@
 import BundleAPI from "./BundleAPI";
 
 export default class ContextAPI extends BundleAPI {
-    constructor(canvas, context) {
+    constructor(canvasWebView, context) {
         super();
 
-        this._canvas = canvas;
+        this._canvasWebView = canvasWebView;
         this._context = context;
-
-        // for the bundle api
-        this._webView = this._canvas._webView;
     };
 };
 
@@ -57,8 +54,8 @@ for(let index = 0; index < properties.length; index++) {
             return new Promise((resolve) => {
                 const key = `${this._context}.${property}`;
                 
-                if(this._canvas._addListener(key, resolve)) {
-                    this._webView.current.injectJavaScript(`
+                if(this._canvasWebView._addListener(key, resolve)) {
+                    this._canvasWebView._webView.current.injectJavaScript(`
                         window.ReactNativeWebView.postMessage([ "${key}", ${key} ]);
                     `);
                 }

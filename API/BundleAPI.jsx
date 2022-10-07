@@ -7,7 +7,7 @@ export default class BundleAPI {
     };
 
     async executeBundle() {
-        await this._webView.current.injectJavaScript(`
+        await this._canvasWebView._webView.current.injectJavaScript(`
             {
                 ${this._bundle.join("")}
             }
@@ -29,6 +29,6 @@ export default class BundleAPI {
         if(this._useBundle)
             this._bundle.push(message);
         else
-            await this._webView.current.injectJavaScript(message);
+            await this._canvasWebView._webView.current.injectJavaScript(message);
     };
 };

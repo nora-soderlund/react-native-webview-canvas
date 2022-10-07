@@ -1,2 +1,2 @@
-import Canvas from "./Components/Canvas.component";
-export default Canvas;
+import CanvasWebView from "./Components/CanvasWebView.component";
+export default CanvasWebView;
