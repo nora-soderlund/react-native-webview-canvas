@@ -4,54 +4,78 @@ React Native WebView Canvas is a component and function mapper between your Reac
 ## Usage
 ```jsx
 import React, { Component } from "react";
-import Canvas from "react-native-webview-canvas";
+import CanvasWebView from "react-native-webview-canvas";
 
 class MyCanvasComponent extends Component {
-  async onLoad(canvas) {
-    await canvas.createElement();
-
+  async onLoad(canvasWebView) {
+    const canvas = await canvasWebView.createCanvas();
+    
     canvas.width = 300;
     canvas.height = 300;
 
     const context = await canvas.getContext("2d");
 
+    context.fillStyle = "green";
+    context.fillRect(0, 0, 300, 300);
+
+    context.font = "14px sans-serif";
     context.textAlign = "center";
     context.textBaseline = "middle";
-
+    
     context.fillStyle = "red";
     context.fillText("Hello World", 150, 150);
   };
   
   render() {
     return (
-      <Canvas
+      <CanvasWebView
         width={300}
         height={300}
-        onLoad={(...args) => this.onLoad(...args)}
+        onLoad={this.onLoad}
         />
     );
-  }
+  };
 }
 ```
 With the Bundle API:
 ```jsx
-async onLoad(canvas) {
-  await canvas.createElement();
+import React, { Component } from "react";
+import CanvasWebView from "react-native-webview-canvas";
 
-  canvas.width = 300;
-  canvas.height = 300;
+class MyCanvasComponent extends Component {
+  async onLoad(canvasWebView) {
+    const canvas = await canvasWebView.createCanvas();
+    
+    canvas.width = 300;
+    canvas.height = 300;
 
-  const context = await canvas.getContext("2d");
-  context.startBundle();
+    const context = await canvas.getContext("2d");
+    
+    context.startBundle();
 
-  context.textAlign = "center";
-  context.textBaseline = "middle";
+    context.fillStyle = "green";
+    context.fillRect(0, 0, 300, 300);
 
-  context.fillStyle = "red";
-  context.fillText("Hello World", 150, 150);
+    context.font = "14px sans-serif";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    
+    context.fillStyle = "red";
+    context.fillText("Hello World", 150, 150);
+
+    await context.executeBundle();
+  };
   
-  await context.executeBundle();
-};
+  render() {
+    return (
+      <CanvasWebView
+        width={300}
+        height={300}
+        onLoad={this.onLoad}
+        />
+    );
+  };
+}
 ```
 
 # References
