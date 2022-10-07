@@ -53,10 +53,16 @@ for(let index = 0; index < properties.length; index++) {
             `);
         },
 
-        async get() {
-            return await this._addToBundleOrInject(`
-                ${this._context}.${property};
-            `);
+        get() {
+            return new Promise((resolve) => {
+                const key = `${this._context}.${property}`;
+                
+                if(this._canvas._addListener(key, resolve)) {
+                    this._webView.current.injectJavaScript(`
+                        window.ReactNativeWebView.postMessage([ "${key}", ${key} ]);
+                    `);
+                }
+            });
         }
     });
 }
