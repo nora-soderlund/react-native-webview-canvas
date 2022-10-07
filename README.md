@@ -111,6 +111,31 @@ Creates an instance of the Canvas API that is not rendered.
 ## Context API (extends Bundle API)
 This has no methods or properties.
 
+## ImageData API
+This package implements a clone of the ImageData API that is both constructed automatically by getImageData, but can also be constructed manually and be used together with Uint8ClampedArray like so:
+```jsx
+// Example to fill a 50x50 square with solid red.
+const dataArray = new Uint8ClampedArray(4 * 50 * 50);
+
+for(let pixel = 0; pixel < dataArray.length; pixel += 4) {
+    dataArray[pixel] = 255;
+
+    dataArray[pixel + 3] = 255;
+}
+
+const imageData = new ImageData(dataArray, 50, 50);
+
+context.putImageData(imageData, 0, 0);
+```
+
+### Methods
+- [ImageData()](https://developer.mozilla.org/en-US/docs/Web/API/ImageData/ImageData)
+
+### Properties
+- [data](https://developer.mozilla.org/en-US/docs/Web/API/ImageData/data)
+- [height](https://developer.mozilla.org/en-US/docs/Web/API/ImageData/height)
+- [width](https://developer.mozilla.org/en-US/docs/Web/API/ImageData/width)
+
 ## Bundle API
 The Bundle API is used to prevent issues when performing several operations synchronously, such as drawing an animation throughout each frame. Enabling this stops the instance from dispatching your property change or method call right away and instead records it for later for when you've finished your bundle and then dispatches everything in one single message.
 - `startBundle()`
