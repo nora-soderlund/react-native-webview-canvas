@@ -93,9 +93,12 @@ Dispatches when the workspace is ready to be used. This is where you should init
 
 ### Methods
 - [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
-- `async createCanvas(background = false)`
+- `async createCanvas()`
 
-Creates an instance of a Canvas within this CanvasAPI WebView instance. If background is set to true, it will not be rendered in the WebView.
+Creates an instance of the Canvas API.
+- `async createBackgroundCanvas()`
+
+Creates an instance of the Canvas API that is not rendered.
 
 ## Canvas API
 ### Properties

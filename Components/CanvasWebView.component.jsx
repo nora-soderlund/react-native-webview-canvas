@@ -53,13 +53,23 @@ export default class CanvasWebView extends Component {
         }
     };
 
-    async createCanvas(background = false) {
+    async createCanvas() {
         const element = `_${this._canvasCount}`;
 
         await this._webView.current.injectJavaScript(`
             const ${element} = document.createElement("canvas");
 
-            ${!background && `document.body.append(${element});`}
+            document.body.append(${element});
+        `);
+
+        return new CanvasAPI(this, element);
+    };
+
+    async createBackgroundCanvas() {
+        const element = `_${this._canvasCount}`;
+
+        await this._webView.current.injectJavaScript(`
+            const ${element} = document.createElement("canvas");
         `);
 
         return new CanvasAPI(this, element);
