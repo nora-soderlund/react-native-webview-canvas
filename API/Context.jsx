@@ -8,6 +8,14 @@ export default class ContextAPI extends BundleAPI {
         this._context = context;
     };
 
+    drawImage(image, ...args) {
+        let json = JSON.stringify([...args]);
+
+        this._canvasWebView._webView.current.injectJavaScript(`
+            ${this._context}.drawImage(${image._image}, ${json.substring(1, json.length - 1)});
+        `);
+    };
+
     putImageData(imageData, ...args) {
         let json = JSON.stringify([...args]);
         let jsonImageData = JSON.stringify([imageData.toObject()]);

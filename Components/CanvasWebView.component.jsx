@@ -3,6 +3,7 @@ import { View } from "react-native";
 import WebView from "react-native-webview";
 
 import CanvasAPI from "./../API/Canvas";
+import Image from "../API/Image";
 import ImageData from "../API/ImageData";
 
 export default class CanvasWebView extends Component {
@@ -59,7 +60,13 @@ export default class CanvasWebView extends Component {
         delete this._listeners[event];
     };
 
-    _canvasCount = 0;
+    _elementCount = 0;
+
+    _getElementCount() {
+        this._elementCount++;
+
+        return this._elementCount;
+    };
 
     constructor(...args) {
         super(...args);
@@ -78,7 +85,7 @@ export default class CanvasWebView extends Component {
     };
 
     async createCanvas() {
-        const element = `_${this._canvasCount}`;
+        const element = `_${this._getElementCount()}`;
 
         await this._webView.current.injectJavaScript(`
             const ${element} = document.createElement("canvas");
@@ -89,8 +96,18 @@ export default class CanvasWebView extends Component {
         return new CanvasAPI(this, element);
     };
 
+    async createImage() {
+        const element = `_${this._getElementCount()}`;
+
+        await this._webView.current.injectJavaScript(`
+            const ${element} = new Image();
+        `);
+
+        return new Image(this, element);
+    };
+
     async createBackgroundCanvas() {
-        const element = `_${this._canvasCount}`;
+        const element = `_${this._elementCount}`;
 
         await this._webView.current.injectJavaScript(`
             const ${element} = document.createElement("canvas");

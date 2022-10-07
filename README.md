@@ -99,6 +99,9 @@ Creates an instance of the Canvas API.
 - `async createBackgroundCanvas()`
 
 Creates an instance of the Canvas API that is not rendered.
+- `async createImage()`
+
+Creates an instance of the Image API.
 
 ## Canvas API
 ### Properties
@@ -110,6 +113,23 @@ Creates an instance of the Canvas API that is not rendered.
 
 ## Context API (extends Bundle API)
 This has no methods or properties.
+
+## Image API
+This has no methods or properties and follows the HTMLImageElement like the Image API except for the constructor and can be used as such:
+
+```jsx
+import { Image } from "react-native-webview-canvas";
+
+// ...
+
+const image = await canvasWebView.createImage();
+
+image.onload = () => {
+    context.drawImage(image, 0, 0);
+};
+
+image.src = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+```
 
 ## ImageData API
 This package implements a clone of the ImageData API that is both constructed automatically by getImageData, but can also be constructed manually and be used together with Uint8ClampedArray like so:
@@ -157,9 +177,15 @@ Empties the current bundle list but DOES NOT execute it. This does NOT stop reco
 
 Stops recording the bundle but DOES NOT empty it.
 
-## Extended ContextAPI
+# Extended Reference
+### Methods
+All methods in here accepts `await` but may not require it. To return a value, you must use `await`. And when not using the Bundle API, you may want to await for the method to complete before performing another operation to avoid issues. In these cases, you should instead use the Bundle API.
+
 ### Properties
 Each and every property here returns a Promise in the getter, this means you must await it or catch it in a callback. Keep in mind if you're using the Bundle API, anything that's not been executed will not show up.
+
+## Context API
+### Properties
 - [fillStyle](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle)
 - [filter](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter)
 - [font](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/font)
@@ -187,8 +213,6 @@ Each and every property here returns a Promise in the getter, this means you mus
 - [wordSpacing](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/wordSpacing)
 
 ### Methods
-All methods in here accepts `await` but may not require it. To return a value, you must use `await`. And when not using the Bundle API, you may want to await for the method to complete before performing another operation to avoid issues. In these cases, you should instead use the Bundle API.
-
 - [arc](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc)
 - [arcTo](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arcTo)
 - [beginPath](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/beginPath)
@@ -235,3 +259,25 @@ All methods in here accepts `await` but may not require it. To return a value, y
 - [strokeText](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeText)
 - [transform](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/transform)
 - [translate](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate)
+
+## Image API
+### Properties
+- [complete](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/complete)
+- [crossOrigin](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/crossOrigin)
+- [decoding](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding)
+- [fetchPriority](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/fetchPriority)
+- [height](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/height)
+- [loading](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading)
+- [naturalHeight](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/naturalHeight)
+- [naturalWidth](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/naturalWidth)
+- [referrerPolicy](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/referrerPolicy)
+- [sizes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/sizes)
+- [src](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/src)
+- [srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)
+- [width](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/width)
+
+- [onload](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event)
+- [onerror](https://developer.mozilla.org/en-US/docs/Web/API/Window/error_event)
+
+### Methods
+- [decode](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decode)
