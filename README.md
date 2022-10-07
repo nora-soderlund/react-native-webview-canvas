@@ -275,7 +275,6 @@ Each and every property here returns a Promise in the getter, this means you mus
 - [src](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/src)
 - [srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)
 - [width](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/width)
-
 - [onload](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event)
 - [onerror](https://developer.mozilla.org/en-US/docs/Web/API/Window/error_event)
 
