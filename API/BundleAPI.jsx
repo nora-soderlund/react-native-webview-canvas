@@ -26,7 +26,7 @@ export default class BundleAPI {
     };
 
     async _addToBundleOrInject(message) {
-        if(this._bundle)
+        if(this._useBundle)
             this._bundle.push(message);
         else
             await this._webView.current.injectJavaScript(message);
