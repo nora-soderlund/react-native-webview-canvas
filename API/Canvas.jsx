@@ -37,15 +37,17 @@ export default class CanvasAPI extends Component {
     };
 
     _onMessage(event) {
-        this._callListeners(event.nativeEvent.data);
-        this._removeListeners(event.nativeEvent.data);
+        const sections = event.nativeEvent.data.split(',');
+
+        this._callListeners(...sections);
+        this._removeListeners(...sections);
     };
 
     async requestAnimationFrame(callback) {
         if(this._addListener("requestAnimationFrame", callback)) {
             await this._webView.current.injectJavaScript(`
                 window.requestAnimationFrame(() => {
-                    window.ReactNativeWebView.postMessage("requestAnimationFrame");
+                    window.ReactNativeWebView.postMessage([ "requestAnimationFrame" ]);
                 });
             `);
         }
