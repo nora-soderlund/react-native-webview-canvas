@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
 
-import WebViewFunctions from "./../WebView";
-
-import Document from "./../Scripts/Document";
-import CanvasAPI from "./../Scripts/Canvas";
+import Document from "../API/Document";
+import CanvasAPI from "../API/Canvas";
 
 export default class Canvas extends Component {
     constructor(...args) {
         super(...args);
 
         this.webView = React.createRef();
+    };
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     };
 
     async onLoadEnd() {
@@ -24,12 +26,11 @@ export default class Canvas extends Component {
         await canvas.createElement();
 
         const context = await canvas.getContext("2d");
-
-        await context.fillRect(0, 0, 50, 50);
+        context.globalAlpha = 0.5;
 
         let left = 0;
 
-        setInterval(async () => {
+        this.interval = setInterval(async () => {
             await context.clearRect(left, 0, 50, 50);
 
             left++;
