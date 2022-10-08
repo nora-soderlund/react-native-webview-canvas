@@ -22,9 +22,33 @@ export default class CanvasAPI {
         `);
     };
 
+    get width() {
+        return new Promise((resolve) => {
+            const key = `${this._canvas}.width`;
+            
+            if(this._canvasWebView._addListener(key, resolve)) {
+                this._canvasWebView._webView.current.injectJavaScript(`
+                    postMessage("${key}", ${key});
+                `);
+            }
+        });
+    };
+
     set height(value) {
         this._canvasWebView._webView.current.injectJavaScript(`
             ${this._canvas}.height = ${value};
         `);
+    };
+
+    get height() {
+        return new Promise((resolve) => {
+            const key = `${this._canvas}.height`;
+            
+            if(this._canvasWebView._addListener(key, resolve)) {
+                this._canvasWebView._webView.current.injectJavaScript(`
+                    postMessage("${key}", ${key});
+                `);
+            }
+        });
     };
 };
