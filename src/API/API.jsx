@@ -5,7 +5,7 @@ export default class API {
                 if(property.startsWith("on")) {
                     const key = this._canvasWebView._createElement();
     
-                    if(this._canvasWebView._addListener(key, value)) {
+                    if(this._canvasWebView._setListener(key, value)) {
                         const message = `
                             ${this._element}.${property} = () => {
                                 postMessage("${key}", null);

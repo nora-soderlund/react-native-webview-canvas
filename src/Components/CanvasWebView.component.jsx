@@ -22,6 +22,9 @@ export default class CanvasWebView extends Component {
     _onMessage(event) {
         const data = JSON.parse(event.nativeEvent.data);
 
+        if(!this._listeners.hasOwnProperty(data.listener))
+            return;
+
         if(data.message) {
             switch(data.type) {
                 case "ImageData":
@@ -37,14 +40,24 @@ export default class CanvasWebView extends Component {
         }
 
         this._callListeners(data.listener, data.message);
-        this._removeListeners(data.listener);
+
+        this._listeners[data.listener] = this._listeners[data.listener].filter(x => x.type == "permanent");
     };
 
     _addListener(event, callback) {
         if(!this._listeners.hasOwnProperty(event))
             this._listeners[event] = [];
 
-        this._listeners[event].push(callback);
+        this._listeners[event].push({ type: "temporary", callback });
+
+        return this._listeners[event].length == 1;
+    };
+
+    _setListener(event, callback) {
+        if(!this._listeners.hasOwnProperty(event))
+            this._listeners[event] = [];
+
+        this._listeners[event].push({ type: "permanent", callback });
 
         return this._listeners[event].length == 1;
     };
@@ -54,11 +67,7 @@ export default class CanvasWebView extends Component {
             return;
 
         for(let index = 0; index < this._listeners[event].length; index++)
-            this._listeners[event][index](...args);
-    };
-
-    _removeListeners(event) {
-        delete this._listeners[event];
+            this._listeners[event][index].callback(...args);
     };
 
     _elementCount = 0;
