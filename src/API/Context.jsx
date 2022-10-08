@@ -186,12 +186,15 @@ const methods = [
 ];
 
 for(let index = 0; index < methods.length; index++) {
-    const method = methods[index];
+    let method = methods[index];
 
     if(ContextAPI.prototype[method] != undefined)
         continue;
 
     ContextAPI.prototype[method] = function(...args) {
+        if(method.startsWith('_'))
+            method = method.substring(1);
+
         let json = JSON.stringify([...args]);
 
         return new Promise((resolve) => {
