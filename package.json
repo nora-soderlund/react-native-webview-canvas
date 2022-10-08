@@ -1,0 +1,27 @@
+{
+  "name": "react-native-webview-canvas",
+  "version": "1.0.100",
+  "description": "A WebView Canvas mapper for React Native.",
+  "main": "src/exports.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nora-soderlund/react-native-webview-canvas.git"
+  },
+  "keywords": [
+    "canvas"
+  ],
+  "author": "Nora Söderlund",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nora-soderlund/react-native-webview-canvas/issues"
+  },
+  "homepage": "https://github.com/nora-soderlund/react-native-webview-canvas#readme",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-native": "^0.69.6",
+    "react-native-webview": "11.23.0"
+  }
+}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
 
-import CanvasAPI from "./../API/Canvas";
+import CanvasAPI from "../API/Canvas";
 import Image from "../API/Image";
 import ImageData from "../API/ImageData";
 

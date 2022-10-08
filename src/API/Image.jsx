@@ -1,5 +1,3 @@
-import BundleAPI from "./Bundle";
-
 export default class Image {
     constructor(canvasWebView, image) {
         this._canvasWebView = canvasWebView;
