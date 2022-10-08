@@ -24,7 +24,7 @@ export default class ContextAPI extends BundleAPI {
             const key = `${this._context}.putImageData`;
             
             if(this._canvasWebView._addListener(key, resolve)) {
-                this._canvasWebView._webView.current.injectJavaScript(`
+                this._addToBundleOrInject(`
                     {
                         const imageData = ${jsonImageData.substring(1, jsonImageData.length - 1)};
 

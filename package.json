@@ -1,6 +1,6 @@
 {
   "name": "react-native-webview-canvas",
-  "version": "1.0.100",
+  "version": "1.0.2",
   "description": "A WebView Canvas mapper for React Native.",
   "main": "src/exports.js",
   "scripts": {
