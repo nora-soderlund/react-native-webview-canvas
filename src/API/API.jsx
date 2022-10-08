@@ -3,11 +3,11 @@ export default class API {
         Object.defineProperty(prototype, property, {
             set(value) {
                 if(property.startsWith("on")) {
-                    const key = `${this._element}.${property}`;
+                    const key = this._canvasWebView._createElement();
     
                     if(this._canvasWebView._addListener(key, value)) {
                         const message = `
-                            ${key} = () => {
+                            ${this._element}.${property} = () => {
                                 postMessage("${key}", null);
                             };
 
@@ -36,11 +36,11 @@ export default class API {
     
             get() {
                 return new Promise((resolve) => {
-                    const key = `${this._element}.${property}`;
+                    const key = this._canvasWebView._createElement();
                     
                     if(this._canvasWebView._addListener(key, resolve)) {
                         this._canvasWebView._webView.current.injectJavaScript(`
-                            postMessage("${key}", ${key});
+                            postMessage("${key}", ${this._element}.${property});
                         `);
                     }
                 });
@@ -65,7 +65,7 @@ export default class API {
             const json = safeArguments.toString();
 
             return new Promise((resolve) => {
-                const key = `${this._element}_${method}_${this._canvasWebView._getElementCount()}`;
+                const key = this._canvasWebView._createElement();
                 
                 if(this._canvasWebView._addListener(key, resolve)) {
                     const message = `postMessage("${key}", ${this._element}.${method}(${json}));`;

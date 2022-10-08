@@ -8,7 +8,7 @@ export default class CanvasAPI {
     };
 
     async getContext(type) {
-        const context = `${this._element}_context_${type}`;
+        const context = this._canvasWebView._createElement();
 
         await this._canvasWebView._webView.current.injectJavaScript(`
             let ${context} = ${this._element}.getContext("${type}");

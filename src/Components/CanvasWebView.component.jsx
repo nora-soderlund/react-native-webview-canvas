@@ -63,10 +63,10 @@ export default class CanvasWebView extends Component {
 
     _elementCount = 0;
 
-    _getElementCount() {
+    _createElement() {
         this._elementCount++;
 
-        return this._elementCount;
+        return `_${this._elementCount}`;
     };
 
     constructor(...args) {
@@ -76,17 +76,18 @@ export default class CanvasWebView extends Component {
     };
 
     async requestAnimationFrame(callback) {
-        if(this._addListener("requestAnimationFrame", callback)) {
+        const key = this._createElement();
+        if(this._addListener(key, callback)) {
             await this._webView.current.injectJavaScript(`
                 window.requestAnimationFrame(() => {
-                    postMessage("requestAnimationFrame");
+                    postMessage("${key}");
                 });
             `);
         }
     };
 
     async createCanvas() {
-        const element = `_${this._getElementCount()}`;
+        const element = this._createElement();
 
         await this._webView.current.injectJavaScript(`
             const ${element} = document.createElement("canvas");
@@ -98,7 +99,7 @@ export default class CanvasWebView extends Component {
     };
 
     async createImage() {
-        const element = `_${this._getElementCount()}`;
+        const element = this._createElement();
 
         await this._webView.current.injectJavaScript(`
             const ${element} = new Image();
@@ -108,7 +109,7 @@ export default class CanvasWebView extends Component {
     };
 
     async createPath2D(...args) {
-        const element = `_${this._getElementCount()}`;
+        const element = this._createElement();
 
         const json = JSON.stringify([...args]);
 
