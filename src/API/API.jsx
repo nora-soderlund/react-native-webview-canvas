@@ -25,8 +25,6 @@ export default class API {
         
                     const message = `${this._element}.${property} = ${json.substring(1, json.length - 1)};`;
                     
-                    console.log(message);
-
                     if(this._addToBundleOrInject)
                         this._addToBundleOrInject(message);
                     else
@@ -69,8 +67,6 @@ export default class API {
                 
                 if(this._canvasWebView._addListener(key, resolve)) {
                     const message = `postMessage("${key}", ${this._element}.${method}(${json}));`;
-
-                    console.log(message);
 
                     if(this._addToBundleOrInject)
                         this._addToBundleOrInject(message);
