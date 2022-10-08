@@ -5,28 +5,32 @@ React Native WebView Canvas is a component and function mapper between your Reac
 With the Bundle API (prefered):
 ```jsx
 import React, { Component } from "react";
+import { PixelRatio } from "react-native";
+
 import CanvasWebView from "react-native-webview-canvas";
 
 class MyCanvasComponent extends Component {
   async onLoad(canvasWebView) {
     const canvas = await canvasWebView.createCanvas();
+
+    const pixelRatio = PixelRatio.get();
     
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = 300 * pixelRatio;
+    canvas.height = 300 * pixelRatio;
 
     const context = await canvas.getContext("2d");
     
     context.startBundle();
 
     context.fillStyle = "green";
-    context.fillRect(0, 0, 300, 300);
+    context.fillRect(0, 0, 300 * pixelRatio, 300 * pixelRatio);
 
-    context.font = "14px sans-serif";
+    context.font = `${14 * pixelRatio}px sans-serif`;
     context.textAlign = "center";
     context.textBaseline = "middle";
     
     context.fillStyle = "red";
-    context.fillText("Hello World", 150, 150);
+    context.fillText("Hello World", 150 * pixelRatio, 150 * pixelRatio);
 
     await context.executeBundle();
   };
@@ -52,20 +56,20 @@ class MyCanvasComponent extends Component {
   async onLoad(canvasWebView) {
     const canvas = await canvasWebView.createCanvas();
     
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = 300 * pixelRatio;
+    canvas.height = 300 * pixelRatio;
 
     const context = await canvas.getContext("2d");
 
     context.fillStyle = "green";
-    await context.fillRect(0, 0, 300, 300);
+    await context.fillRect(0, 0, 300 * pixelRatio, 300 * pixelRatio);
 
-    context.font = "14px sans-serif";
+    context.font = `${14 * pixelRatio}px sans-serif`;
     context.textAlign = "center";
     context.textBaseline = "middle";
     
     context.fillStyle = "red";
-    await context.fillText("Hello World", 150, 150);
+    await context.fillText("Hello World", 150 * pixelRatio, 150 * pixelRatio);
   };
   
   render() {
@@ -89,6 +93,9 @@ Sets the width of the WebView (workspace) instance and NOT the Canvas API elemen
 - height
 
 Sets the height of the WebView (workspace) instance and NOT the Canvas API element.
+- enableViewport
+
+If true, adds a viewport meta tag to set the pixel ratio to the device-width. By setting this to true, you won't need to use PixelRatio.get() but you will also be presented with a more blury natural outcome from the canvas on devices with large pixel ratios, such as iOS devices.
 - onLoad
 
 Dispatches when the workspace is ready to be used. This is where you should initialize your render functions.

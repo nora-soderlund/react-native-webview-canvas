@@ -157,7 +157,8 @@ export default class CanvasWebView extends Component {
                             <html>
                                 <head>
                                     <meta charset="UTF-8">
-                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+                                    ${(this.props?.enableViewport)?(`<meta name="viewport" content="width=device-width, initial-scale=1.0">`):("")}
 
                                     <style type="text/css">
                                         html, body {
