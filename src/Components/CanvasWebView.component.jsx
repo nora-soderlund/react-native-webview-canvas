@@ -140,6 +140,8 @@ export default class CanvasWebView extends Component {
                     onLoad={() => this.props?.onLoad && this.props.onLoad(this)}
                     onMessage={(...args) => this._onMessage(...args)}
                     style={{ backgroundColor: "transparent" }}
+                    scrollEnabled={false}
+                    overScrollMode={"never"}
                     source={{
                         html: `
                             <html>
