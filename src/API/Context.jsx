@@ -39,6 +39,46 @@ export default class ContextAPI extends BundleAPI {
             }
         });
     };
+
+    fill(...args) {
+        const argsArray = [...args];
+
+        if(typeof argsArray[0] == "object" && argsArray[0].toElement) {
+            let json = JSON.stringify(argsArray.slice(1));
+
+            return new Promise((resolve) => {
+                const key = `${this._context}_fill_${this._canvasWebView._getElementCount()}`;
+                
+                if(this._canvasWebView._addListener(key, resolve)) {
+                    this._addToBundleOrInject(`
+                        postMessage("${key}", ${this._context}.fill(${argsArray[0].toElement()}, ${json.substring(1, json.length - 1)}));
+                    `);
+                }
+            });
+        }
+        else
+            return this._fill(...args);
+    };
+
+    stroke(...args) {
+        const argsArray = [...args];
+
+        if(typeof argsArray[0] == "object" && argsArray[0].toElement) {
+            let json = JSON.stringify(argsArray.slice(1));
+
+            return new Promise((resolve) => {
+                const key = `${this._context}_stroke_${this._canvasWebView._getElementCount()}`;
+                
+                if(this._canvasWebView._addListener(key, resolve)) {
+                    this._addToBundleOrInject(`
+                        postMessage("${key}", ${this._context}.stroke(${argsArray[0].toElement()}, ${json.substring(1, json.length - 1)}));
+                    `);
+                }
+            });
+        }
+        else
+            return this._stroke(...args);
+    };
 };
 
 const properties = [
@@ -112,7 +152,7 @@ const methods = [
     "drawFocusIfNeeded",
     "drawImage",
     "ellipse",
-    "fill",
+    "_fill",
     "fillRect",
     "fillText",
     "getContextAttributes",
@@ -138,7 +178,7 @@ const methods = [
     "scrollPathIntoView",
     "setLineDash",
     "setTransform",
-    "stroke",
+    "_stroke",
     "strokeRect",
     "strokeText",
     "transform",
@@ -155,7 +195,7 @@ for(let index = 0; index < methods.length; index++) {
         let json = JSON.stringify([...args]);
 
         return new Promise((resolve) => {
-            const key = `${this._context}.${method}`;
+            const key = `${this._context}_${method}_${this._canvasWebView._getElementCount()}`;
             
             if(this._canvasWebView._addListener(key, resolve)) {
                 this._addToBundleOrInject(`

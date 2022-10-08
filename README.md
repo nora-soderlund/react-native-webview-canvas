@@ -116,6 +116,29 @@ Creates an instance of the Image API.
 ## Context API (extends Bundle API)
 This has no methods or properties.
 
+## Path2D API (extends Bundle API)
+This has no methods or properties and follows the CanvasRenderingContext2D interface like the Path2D API except for the constructor and can be used as such:
+
+```jsx
+import { Path2D } from "react-native-webview-canvas";
+
+// ...
+
+const path = await canvasWebView.createPath2D();
+
+path.startBundle();
+
+path.moveTo(0, 0);
+
+path.lineTo(100, 0);
+path.lineTo(100, 100);
+
+await path.executeBundle();
+
+context.fillStyle = "orange";
+context.fill(path);
+```
+
 ## Image API
 This has no methods or properties and follows the HTMLImageElement like the Image API except for the constructor and can be used as such:
 
@@ -261,6 +284,18 @@ Each and every property here returns a Promise in the getter, this means you mus
 - [strokeText](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeText)
 - [transform](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/transform)
 - [translate](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate)
+
+## Path2D API
+### Methods
+- [addPath](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/addPath)
+- [closePath](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/closePath)
+- [moveTo](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/moveTo)
+- [lineTo](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/lineTo)
+- [bezierCurveTo](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/bezierCurveTo)
+- [quadraticCurveTo](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/quadraticCurveTo)
+- [arc](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/arc)
+- [ellipse](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/ellipse)
+- [rect](https://developer.mozilla.org/en-US/docs/Web/API/Path2D/rect)
 
 ## Image API
 ### Properties

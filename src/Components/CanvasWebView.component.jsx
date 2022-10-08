@@ -3,6 +3,7 @@ import { View } from "react-native";
 import WebView from "react-native-webview";
 
 import CanvasAPI from "../API/Canvas";
+import Path2D from "../API/Path2D";
 import Image from "../API/Image";
 import ImageData from "../API/ImageData";
 
@@ -104,6 +105,18 @@ export default class CanvasWebView extends Component {
         `);
 
         return new Image(this, element);
+    };
+
+    async createPath2D(...args) {
+        const element = `_${this._getElementCount()}`;
+
+        const json = JSON.stringify([...args]);
+
+        await this._webView.current.injectJavaScript(`
+            const ${element} = new Path2D(${json.substring(1, json.length - 1)});
+        `);
+
+        return new Path2D(this, element);
     };
 
     async createBackgroundCanvas() {
