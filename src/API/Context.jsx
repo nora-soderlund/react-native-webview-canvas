@@ -74,8 +74,8 @@ for(let index = 0; index < properties.length; index++) {
     const property = properties[index];
 
     Object.defineProperty(ContextAPI.prototype, property, {
-        set(...args) {
-            let json = JSON.stringify([...args]);
+        set(value) {
+            let json = JSON.stringify([value]);
 
             this._addToBundleOrInject(`
                 ${this._context}.${property} = ${json.substring(1, json.length - 1)};
@@ -158,7 +158,7 @@ for(let index = 0; index < methods.length; index++) {
             const key = `${this._context}.${method}`;
             
             if(this._canvasWebView._addListener(key, resolve)) {
-                this._canvasWebView._webView.current.injectJavaScript(`
+                this._addToBundleOrInject(`
                     postMessage("${key}", ${this._context}.${method}(${json.substring(1, json.length - 1)}));
                 `);
             }
