@@ -1,5 +1,18 @@
-# react-native-webview-canvas
+<p align="center">
+  <h3 align="center">react-native-webview-canvas</h3>
+
+  <p align="center">A component and function mapper between the Canvas API and your React Native application.</p>
+</p>
+
+## About The Project
 React Native WebView Canvas is a component and function mapper between your React Native application and canvas' inside of a WebView component. It allows you to use the Canvas API without having to port the communication with a WebView yourself or use a second route to manage the WebView scripts.
+
+[View the package on NPM.](https://www.npmjs.com/package/react-native-webview-canvas)
+
+## Installation
+```
+npm install react-native-webview-canvas
+```
 
 ## Usage
 With the Bundle API (prefered):
@@ -7,7 +20,7 @@ With the Bundle API (prefered):
 import React, { Component } from "react";
 import { PixelRatio } from "react-native";
 
-import CanvasWebView from "react-native-webview-canvas";
+import CanvasWebView, { Path2D, Image, ImageData } from "react-native-webview-canvas";
 
 class MyCanvasComponent extends Component {
   async onLoad(canvasWebView) {
@@ -50,7 +63,7 @@ class MyCanvasComponent extends Component {
 Without the Bundle API:
 ```jsx
 import React, { Component } from "react";
-import CanvasWebView from "react-native-webview-canvas";
+import CanvasWebView, { Path2D, Image, ImageData } from "react-native-webview-canvas";
 
 class MyCanvasComponent extends Component {
   async onLoad(canvasWebView) {
