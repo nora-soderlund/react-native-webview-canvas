@@ -11,7 +11,7 @@
     "url": "git+https://github.com/nora-soderlund/react-native-webview-canvas.git"
   },
   "keywords": [
-    "canvas"
+    "react-native", "canvas", "mapper", "context", "context2d", "render", "draw"
   ],
   "author": "Nora Söderlund",
   "license": "ISC",
