@@ -1,8 +1,5 @@
-<p align="center">
-  <h3 align="center">react-native-webview-canvas</h3>
-
-  <p align="center">A component and function mapper between the Canvas API and your React Native application.</p>
-</p>
+# react-native-webview-canvas
+A component and function mapper between the Canvas API and your React Native application.
 
 ## About The Project
 React Native WebView Canvas is a component and function mapper between your React Native application and canvas' inside of a WebView component. It allows you to use the Canvas API without having to port the communication with a WebView yourself or use a second route to manage the WebView scripts.
