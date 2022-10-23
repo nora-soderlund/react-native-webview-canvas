@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, View } from "react-native";
+import { View, Platform } from "react-native";
 import WebView from "react-native-webview";
 
 import CanvasAPI from "../API/Canvas";
@@ -140,6 +140,14 @@ export default class CanvasWebView extends Component {
     };
 
     render() {
+        const style = {
+            backgroundColor: "transparent"
+        };
+        
+        if(Platform.OS == "android" && Platform.Version >= 28) {
+            style.opacity = 0.9;
+        }
+
         return (
             <View
                 width={this.props.width}
@@ -149,19 +157,7 @@ export default class CanvasWebView extends Component {
                     ref={this._webView}
                     onLoad={() => this.props?.onLoad && this.props.onLoad(this)}
                     onMessage={(...args) => this._onMessage(...args)}
-                    style={[
-                        {
-                            backgroundColor: "transparent",
-                            overflow: "none"
-                        },
-
-                        (Platform.OS == "android" && Platform.Version >= 28) && {
-                            flex: 0,
-                            opacity: 0.99
-                        }
-                    ]}
-                    mixedContentMode="always"
-                    scalesPageToFit={false}
+                    style={style}
                     scrollEnabled={false}
                     overScrollMode={"never"}
                     source={{
