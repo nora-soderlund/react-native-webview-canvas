@@ -11,7 +11,13 @@
     "url": "git+https://github.com/nora-soderlund/react-native-webview-canvas.git"
   },
   "keywords": [
-    "react-native", "canvas", "mapper", "context", "context2d", "render", "draw"
+    "react-native",
+    "canvas",
+    "mapper",
+    "context",
+    "context2d",
+    "render",
+    "draw"
   ],
   "author": "Nora Söderlund",
   "license": "ISC",
@@ -20,8 +26,11 @@
   },
   "homepage": "https://github.com/nora-soderlund/react-native-webview-canvas#readme",
   "dependencies": {
-    "react": "^18.0.0",
-    "react-native": "^0.69.6",
-    "react-native-webview": "11.23.0"
+    "react": "^18.2.0",
+    "react-native": "^0.71.6",
+    "react-native-webview": "^12.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
   }
 }
