@@ -1,3 +1,6 @@
+# Deprecated warning
+I am no longer maintaining this package and I recommend you to switch to [expo-2d-context](https://github.com/expo/expo-2d-context) or similar.
+
 # react-native-webview-canvas
 A component and function mapper between the Canvas API and your React Native application.
 
